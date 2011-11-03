@@ -19,6 +19,19 @@ currentPathScript = os.path.split(os.path.realpath(__file__))[0]
 #modulesDir = mafPath.mafSourcesDir
 #outputDir = mafPath.mafQADir
 
+ruleArray = []
+
+""" ruleArray is an array of ruleDictionary
+"""
+
+""" ruleDictionary
+    {
+        "name": FileNameRule
+        "days":   [list of days]
+        "values": [list of values]
+    }
+"""
+
 
 def parseData():
     root = os.path.join("/home/guestadmin/workspace/QAResults");
@@ -48,44 +61,56 @@ def parseData():
         else:
             value = dom.getElementsByTagName('root')[0].getElementsByTagName('results')[0].getElementsByTagName('percentageCoverage')[0].firstChild.nodeValue
         
-        print day, rule, value[-3:]
-    # save in a dictionary with keys made by rules, and values the final result
+        #print day, rule, value[-3:-1]
+        #search if the rule is already inserted
+        ruleDictionary = None
+        for r in ruleArray:
+            if(r['name'] == rule):
+                ruleDictionary = r
+            
+        if(ruleDictionary == None):
+            ruleDictionary = {}
+            ruleDictionary['name'] = rule
+            ruleDictionary['days'] = []
+            ruleDictionary['values'] = []
+            ruleArray.append(ruleDictionary)
+            
+        ruleDictionary['days'].append(day)
+        ruleDictionary['values'].append(int(value[-4:-2]))
+        #print ruleDictionary    
     
     # graph data
-    pass
+    
 
-def drawGraph():
-    date1 = datetime.datetime( 2000, 3, 2)
-    date2 = datetime.datetime( 2000, 3, 6)
-    delta = datetime.timedelta(hours=6)
-    dates = drange(date1, date2, delta)
+def drawGraphs():
+    print "Start Drawing..."
+    for rule in ruleArray:
+        days   = rule['days'] 
+        values = rule['values']
+            
+        dates = []
+        for day in days:
+            y,m,d = day.split("-")
+            v = datetime.datetime( int(y), int(m), int(d))
+            dates.append(v)
+        
+        #print rule['name']    
+        #print dates, len(dates)
+        #print values, len(values)
+        
+        fig = figure()
+        ax = fig.add_subplot(111)
+        ax.plot_date(dates, values, '-')
+    
+        # The hour locator takes the hour or sequence of hours you want to
+        # tick, not the base multiple
 
-    y = arange( len(dates)*1.0)
-
-    fig = figure()
-    ax = fig.add_subplot(111)
-    ax.plot_date(dates, y*y, '-')
-
-    # this is superfluous, since the autoscaler should get it right, but
-    # use date2num and num2date to to convert between dates and floats if
-    # you want; both date2num and num2date convert an instance or sequence
-    ax.set_xlim( dates[0], dates[-1] )
-
-    # The hour locator takes the hour or sequence of hours you want to
-    # tick, not the base multiple
-
-    ax.xaxis.set_major_locator( DayLocator() )
-    ax.xaxis.set_minor_locator( HourLocator(arange(0,25,6)) )
-    ax.xaxis.set_major_formatter( DateFormatter('%Y-%m-%d') )
-
-    ax.fmt_xdata = DateFormatter('%Y-%m-%d %H:%M:%S')
-    fig.autofmt_xdate()
-
-    fig.savefig('test1.png', dpi=300)
+    
+        fig.savefig(rule['name'] +'.png', dpi=300)
 
 def run(param):
     parseData()
-    drawGraph()
+    drawGraphs()
 
 def usage():
     print "Usage: python drawGraphs.py [-h]"
