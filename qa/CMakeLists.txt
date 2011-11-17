@@ -40,6 +40,9 @@ macro(configure_files srcDir destDir)
     endforeach(templateFile)
 endmacro(configure_files)
 
+SET(PROJ_SOURCE_DIR "")
+SET(PROJ_BINARY_DIR "")
+
 get_filename_component(CUR_ABSOLUTE_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 configure_files("${CUR_ABSOLUTE_DIR}" "${MAF_BINARY_DIR}/qa")
 add_subdirectory(doc_output)
