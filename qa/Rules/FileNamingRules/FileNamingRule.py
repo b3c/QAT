@@ -6,7 +6,7 @@ class FileNamingRule(AbstractRule):
     def __init__(self):
         AbstractRule.__init__(self)
         self.DictionaryList = []
-		self.DictionaryBaseClassList = []
+        self.DictionaryBaseClassList = []
 
     def execute(self):
         f = open("./Rules/FileNamingRules/" + self.ParameterList[0], 'r')
@@ -51,9 +51,9 @@ class FileNamingRule(AbstractRule):
           self.MarkedList.append("<item><class>" + str(className) + "</class></item>")
           return self.MarkedList
         
-		for skipName in self.DictionaryBaseClassList:
-			if(skipName == str(className)):
-				return self.MarkedList
+        for skipName in self.DictionaryBaseClassList:
+          if(skipName == str(className)):
+            return self.MarkedList
 		
         baseClassName = self.dom.getElementsByTagName('compounddef')[0].getElementsByTagName('basecompoundref')[0].firstChild.nodeValue
         
@@ -64,6 +64,6 @@ class FileNamingRule(AbstractRule):
             return self.MarkedList
         
         ##print "***NO 2*** " , className , baseClassName              
-        self.MarkedList.append((str(className)))
+        self.MarkedList.append("<item><class>" + str(className) + "</class></item>")
         return self.MarkedList
         
