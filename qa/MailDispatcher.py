@@ -14,7 +14,7 @@ from email import Encoders
 #    import mafPath
 
 
-def send_mail(send_from, send_to, subject, text, files=[], server="smtp.gmail.com", port = 587):
+def send_mail(send_from, send_to, subject, text, files=[], server="localhost", port = 587):
   assert type(send_to)==list
   assert type(files)==list
 
@@ -45,34 +45,45 @@ def send_mail(send_from, send_to, subject, text, files=[], server="smtp.gmail.co
   smtpserver.close()
   
 def run(param):
-    mailTo = []
-    mailTo.append("d.giunchi@scsitaly.com")
-    files = []
-    files.append("README.txt")
-    title= "QA Weekly Report"
-    msg = "rapporto che indica stabilita' di governo"
-    send_mail("MAFServiceBuild@scsitaly.com", mailTo, title, msg, files)
+    mailFrom = param["from"]
+    mailTo = param["to"].split(",")
+    files = param["attachments"].split(",")
+    title= param["subject"]
+    msg = param["message"]
+    send_mail(mailFrom, mailTo, title, msg, files)
 
 def usage():
-    print "Usage: python MailDispatcher.py [-h] [-l] [-c]"
+    print "Usage: python MailDispatcher.py [-h] [-f] [-t] [-s] [-m] [-a]"
     print "-h, --help                    show help (this)"
+    print "-f, --from=                   address from"
+    print "-t, --to=                     address to, comma separated value without spaces"
+    print "-s, --subject=                mail subject"
+    print "-m, --message=                mail message"
+    print "-a, --attachments=            mail attachments, comma separated value without spaces"
     print 
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "h", ["help",])
+        opts, args = getopt.getopt(sys.argv[1:], "hf:t:s:m:a:", ["help","from","to","subject","message","attachments"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
-    
+    param = {}    
     for o, a in opts:
         if o in ("-h", "--help"):
             usage()
             return
-        else:
-            assert False, "unhandled option"
-
-    param = {}
+        elif o in ("-f", "--from"):
+            param["from"] = a
+        elif o in ("-t", "--to"):
+            param["to"] = a
+        elif o in ("-s", "--subject"):
+            param["subject"] = a
+        elif o in ("-m", "--message"):
+            param["message"] = a
+        elif o in ("-a", "--attachments"):
+            param["attachments"] = a
+        
     run(param)
     
 if __name__ == "__main__":
