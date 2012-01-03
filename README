@@ -1,0 +1,4 @@
+QAT , Quality Assurance Toolkit
+
+QAT is a toolkit, implemented for hekp software developers for maintaing clena and well structured C++ or Python code.
+There is an initial configuriation for using QAT on your project. Check internal README.txt for usage.
