@@ -2,5 +2,5 @@ QAT , Quality Assurance Toolkit
 
 Licencse: http://bit.ly/uYW8xc
 
-QAT is a toolkit, implemented for hekp software developers for maintaing clena and well structured C++ or Python code.
+QAT is a toolkit, implemented for helping software developers to  maintain clean and well structured C++ or Python code.
 There is an initial configuriation for using QAT on your project. Check internal README.txt for usage.
