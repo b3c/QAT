@@ -129,7 +129,7 @@ def run(param):
       pos = pos + len(li)
       #os.chdir(scriptsDir)
     
-    if(param['memory-profiling']):
+   if(param['memory-profiling']):
         externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts")
         os.system("python " + os.path.join(externalScriptDirectory,"memoryProfilingPublish.py"))
 
