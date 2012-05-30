@@ -13,7 +13,7 @@ except ImportError:
     import mafPath
 
 def usage():
-    print "Usage:  python LCOVCoveragePublish.py"
+    print "Usage:  python coveragePublish.py"
 
 def publishReport():
     extScriptDir = os.getcwd()
@@ -26,15 +26,15 @@ def publishReport():
     xmlList=os.listdir(xmlDir)
     htmlList=[file.replace(".xml", ".html") for file in os.listdir(xmlDir)]
     
-    LCOVExternalCoverageDir = os.path.join(qaResultsDir,"externalLCOVCoverage")
-    covList = os.listdir(LCOVExternalCoverageDir)
+    externalCoverageDir = os.path.join(qaResultsDir,"externalCoverage")
+    covList = os.listdir(externalCoverageDir)
     
     if(os.path.exists(htmlDir) == False):
         print "Html Results Dir doesn't exist %s" % htmlDir
         exit()
 
     if(os.path.exists(qaResultsDir) == False):
-        print "LCOV external directory results doesn't exist %s" % LCOVExternalCoverageDir
+        print "LCOV external directory results doesn't exist %s" % externalCoverageDir
         exit()
 
     try:
@@ -44,14 +44,14 @@ def publishReport():
         tailString = "".join(open(os.path.join(htmlDir, "Styles" , "tail.temp")))
         #fileList = []
         
-        if(os.path.exists(os.path.join(LCOVExternalCoverageDir, "index.html"))):
+        if(os.path.exists(os.path.join(externalCoverageDir, "index.html"))):
             print "************************* Warning ******************************"
             print "LCOV Report already Formatted, please remove directory and rerun Publishing script"
             print "************************* ------- ******************************"
             return      
                 
         #loop over all html files and extract text between <body> </body>
-        for root, subFolders, files in os.walk(LCOVExternalCoverageDir):
+        for root, subFolders, files in os.walk(externalCoverageDir):
             for item in files:
                 if(os.path.splitext( item )[-1] == ".html"):
                     fullPath = os.path.join(root,item)
@@ -121,7 +121,7 @@ def publishReport():
         #create index file 
         
         
-        fileIndex = open(LCOVExternalCoverageDir + "/index.html", 'w');
+        fileIndex = open(externalCoverageDir + "/index.html", 'w');
         fileIndex.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">")
         headStringIndex = headString.replace("href=\"Styles/", "href=\"../html/Styles/")
         headStringIndex = headStringIndex.replace("<li><a href=\"index.html\">Introduction</a></li>", "<li><a href=\"../html/index.html\">Introduction</a></li>")

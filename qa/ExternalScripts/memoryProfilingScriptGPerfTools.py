@@ -7,6 +7,7 @@ class GPerfToolsHandler:
 
     def execute(self):
         try:
+            # iterate along all the tests and launch performance tool (heap check)
             os.system("")
             
         except Exception, e:
