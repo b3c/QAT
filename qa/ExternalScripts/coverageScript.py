@@ -13,7 +13,7 @@ modulesDir = os.path.abspath(mafPath.mafSourcesDir)
 currentModule = ""
 
 def usage():
-    print "Usage:  python LCOVCoverageScript.py <moduleName>"
+    print "Usage:  python coverageScript.py <moduleName>"
 
 def createCoverageReport():
     extScriptDir = currentPathScript
@@ -22,7 +22,7 @@ def createCoverageReport():
     testDir = os.path.join(mafPath.mafTestsDir, currentModule + "Test")
     binDir = os.path.join(mafPath.mafBinaryDir, "bin") #here can be also with Debug
     qaResultsDir = os.path.join(mafPath.mafQADir, "QAResults")
-    LCOVExternalCoverageDir = os.path.join(qaResultsDir, "externalLCOVCoverage")
+    LCOVExternalCoverageDir = os.path.join(qaResultsDir, "externalCoverage")
 
     if(os.path.exists(moduleDir) == False):
         print "Module Dir doesn't exist %s" % moduleDir

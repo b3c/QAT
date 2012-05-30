@@ -59,9 +59,9 @@ def run(param):
     print "QA SUCCESSFUL"
 
 
-    if(param['LCOVCoverage']):
+    if(param['coverage']):
         baseDir = modulesDir
-        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "LCOVCoverageScript.py")
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "coverageScript.py")
 
         for item in os.listdir(baseDir):
             if (os.path.isfile(os.path.join(baseDir, item))==False):
@@ -78,38 +78,44 @@ def run(param):
         for item in os.listdir(baseDir):
             if (os.path.isfile(os.path.join(baseDir, item))==False):
                 if(item.find("maf") != -1):
-                    os.system("python " + externalScriptFile + " -m " + item)          
+                    os.system("python " + externalScriptFile + " -m " + item)
+    if(param['memory-profiling']):
+        baseDir = modulesDir
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "memoryProfilingScript.py")
+        print baseDir
+        #os.system("python " + externalScriptFile)      
+        
 def usage():
-    print "Usage: python ScriptLauncher.py [-h] [-l] [-c]"
-    print "-h, --help                    show help (this)"
-    print "-l, --enable-LCOVCoverage     enable LCOV coverage"
-    print "-c, --enable-cppcheck        enable cppcheck tool"
-    print "-C, --enable-cccc            enable cccc tool"
+    print "Usage: python ScriptLauncher.py [-h] [-l] [-c] [-M]"
+    print "-h, --help                     show help (this)"
+    print "-l, --enable-coverage          enable coverage"
+    print "-c, --enable-cppcheck          enable cppcheck tool"
+    print "-C, --enable-cccc              enable cccc tool: conditional complexity"
+    print "-M, --enable-memory-profiling  enable memory profiler tool"
     print 
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hlcC", ["help","enable-LCOVCoverage","enable-cppcheck","enable-cccc"])
+        opts, args = getopt.getopt(sys.argv[1:], "hlcCM", ["help","enable-coverage","enable-cppcheck","enable-cccc", "enable-memory-profiling"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
-    LCOVCoverageFlag = False
-    cppcheckFlag = False
-    ccccFlag = False
+    param = {'coverage':False, 'cppcheck':False, 'cccc':False, 'memory-profiling' : False}
     for o, a in opts:
         if o in ("-h", "--help"):
             usage()
             return
-        elif o in ("-l", "--enable-LCOVCoverage"):
-            LCOVCoverageFlag = True
+        elif o in ("-l", "--enable-coverage"):
+            param['coverage'] = True
         elif o in ("-c", "--enable-cppcheck"):
-            cppcheckFlag = True
+            param['cppcheck'] = True
         elif o in ("-C", "--enable-cccc"):
-            ccccFlag = True
+            param['cccc'] = True
+        elif o in ("-M", "--enable-memory-profiling"):
+            param['memory-profiling'] = True
         else:
             assert False, "unhandled option"
 
-    param = {'LCOVCoverage':LCOVCoverageFlag, 'cppcheck':cppcheckFlag, 'cccc':ccccFlag}
     run(param)
     
 if __name__ == "__main__":

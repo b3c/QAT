@@ -15,12 +15,6 @@ except ImportError:
 
 currentPathScript = os.path.split(os.path.realpath(__file__))[0]
 
-def usage():
-    print "Usage: python Formatter.py [--enable-LCOVCoverage]"
-    print "-l, --enable-LCOVCoverage=   enable LCOV coverage"
-    print "-c, --enable-cppcheck=       enable cppcheck tool"
-    print "-C, --enable-cccc=           enable cccc tool"
-
 def search_file(filename, search_path):
    """Given a search path, find file
    """
@@ -104,13 +98,13 @@ def run(param):
    #check for external scripting
    pos = 0
    pos = headString.find("@@@_EXTERNAL_TOOLS_REPORT_@@@")-1
-   if(param['LCOVCoverage']):
+   if(param['coverage']):
       #generateExternalLink
       externalScriptDirectory = os.path.join(scriptsDir, "ExternalScripts")
       #os.chdir(externalScriptDirectory)
-      os.system("python " + os.path.join(externalScriptDirectory, "LCOVCoveragePublish.py"))
+      os.system("python " + os.path.join(externalScriptDirectory, "coveragePublish.py"))
       
-      li = "<li><a href=\"../externalLCOVCoverage/index.html\">LCOV Coverage</a></li>";
+      li = "<li><a href=\"../externalCoverage/index.html\">Coverage</a></li>";
       headString = headString[:pos] + li + headString[pos:]
       pos = pos + len(li)
       #os.chdir(scriptsDir)
@@ -134,6 +128,12 @@ def run(param):
       headString = headString[:pos] + li + headString[pos:]
       pos = pos + len(li)
       #os.chdir(scriptsDir)
+    
+    if(param['memory-profiling']):
+        externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts")
+        os.system("python " + os.path.join(externalScriptDirectory,"memoryProfilingPublish.py"))
+
+        pass
 
    #remove placeholder for external scripting
    headString = headString.replace("@@@_EXTERNAL_TOOLS_REPORT_@@@", "")
@@ -209,27 +209,36 @@ def run(param):
 
    os.chdir(scriptsDir)
 
+def usage():
+    print "Usage: python ScriptLauncher.py [-h] [-l] [-c] [-M]"
+    print "-h, --help                     show help (this)"
+    print "-l, --enable-coverage          enable coverage"
+    print "-c, --enable-cppcheck          enable cppcheck tool"
+    print "-C, --enable-cccc              enable cccc tool: conditional complexity"
+    print "-M, --enable-memory-profiling   enable memory profiler tool"
+
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "lcC", ["enable-LCOVCoverage","enable-cppcheck","enable-cccc"])
+        opts, args = getopt.getopt(sys.argv[1:], "hlcCM", ["help","enable-coverage","enable-cppcheck","enable-cccc", "enable-memory-profiling"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
-        
-    LCOVCoverageFlag = False
-    cppcheckFlag = False
-    ccccFlag = False
+    param = {'coverage':False, 'cppcheck':False, 'cccc':False, 'memory-profiling' : False}
     for o, a in opts:
-        if o in ("-l", "--enable-LCOVCoverage"):
-            LCOVCoverageFlag = True
+        if o in ("-h", "--help"):
+            usage()
+            return
+        elif o in ("-l", "--enable-coverage"):
+            param['coverage'] = True
         elif o in ("-c", "--enable-cppcheck"):
-            cppcheckFlag = True
+            param['cppcheck'] = True
         elif o in ("-C", "--enable-cccc"):
-            ccccFlag = True
+            param['cccc'] = True
+        elif o in ("-M", "--enable-memory-profiling"):
+            param['memory-profiling'] = True
         else:
             assert False, "unhandled option"
 
-    param = {'LCOVCoverage':LCOVCoverageFlag, 'cppcheck':cppcheckFlag, 'cccc':ccccFlag}
     run(param)
 
 
