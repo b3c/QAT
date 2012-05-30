@@ -1,1 +1,3 @@
-*.DS_Store*
+.DS_Store
+qa/.DS_Store
+qa/ExternalScripts/.DS_Store
