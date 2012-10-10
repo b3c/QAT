@@ -11,6 +11,11 @@
 					</h3>
                     <h4><br/>Link to <a href="http://www.biomedtown.org/biomed_town/MAF/MAF3%20Floor/documentation/conventions/">Coding Conventions</a></h4>
 				</div>
+                <div id="subheader" class="clear">
+                    <h3>
+                        Good commented classes : <xsl:value-of select="root/results/percentage"/>
+                    </h3>
+                </div>
 				<div id="contentTable">
 					<table id="listing">
 						<thead>
@@ -38,11 +43,6 @@
                       </xsl:for-each>
 						</tbody>
 					</table>
-				</div>
-				<div id="subheader" class="clear">
-					<h3>
-                      Good commented classes : <xsl:value-of select="root/results/percentage"/>
-					</h3>
 				</div>
 			</div>
 		</div>

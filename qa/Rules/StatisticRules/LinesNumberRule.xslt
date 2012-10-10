@@ -8,6 +8,14 @@
 						Each file is evaluated, checking the number of line (not empty) for each class.
 					</h3>
 				</div>
+                <div id="subheader" class="clear">
+                    <h3>
+                        Total Number Of Lines: <xsl:value-of select='sum(//linesNumber)'/>
+                    </h3>
+                    <h3>
+                        Total Number Of Files: <xsl:value-of select='count(//item)'/>
+                    </h3>
+                </div>
 				<div id="contentTable">
 					<table id="listing">
 						<thead>
@@ -35,14 +43,6 @@
                       </xsl:for-each>
 						</tbody>
 					</table>
-				</div>
-				<div id="subheader" class="clear">
-					<h3>
-                        Total Number Of Lines: <xsl:value-of select='sum(//linesNumber)'/>
-					</h3>
-                    <h3>
-                        Total Number Of Files: <xsl:value-of select='count(//item)'/>
-					</h3>
 				</div>
 			</div>
 		</div>

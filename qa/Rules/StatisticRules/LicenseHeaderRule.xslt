@@ -8,6 +8,11 @@
 						Check if each file contains in the first 10 lines the header with the link to the <a href="http://tiny.cc/QXJ4D">license</a>
 					</h3>
 				</div>
+                <div id="subheader" class="clear">
+                    <h3>
+                        Good License Header files : <xsl:value-of select="root/results/percentage"/>
+                    </h3>
+                </div>
 				<div id="contentTable">
 					<table id="listing">
 						<thead>
@@ -32,11 +37,6 @@
                       </xsl:for-each>
 						</tbody>
 					</table>
-				</div>
-				<div id="subheader" class="clear">
-					<h3>
-                      Good License Header files : <xsl:value-of select="root/results/percentage"/>
-					</h3>
 				</div>
 			</div>
 		</div>
