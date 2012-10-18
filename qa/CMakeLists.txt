@@ -42,9 +42,15 @@ macro(configure_files srcDir destDir)
     endforeach(templateFile)
 endmacro(configure_files)
 
-SET(PROJ_SOURCE_DIR "${MAF_SOURCE_DIR}")
-SET(PROJ_BINARY_DIR "${MAF_BINARY_DIR}")
+if(${PROJ_SOURCE_DIR})
+else(${PROJ_SOURCE_DIR})
+    set(PROJ_SOURCE_DIR ${MAF_SOURCE_DIR})
+endif(${PROJ_SOURCE_DIR})
 
+if(${PROJ_BINARY_DIR})
+else(${PROJ_BINARY_DIR})
+    set(PROJ_BINARY_DIR ${MAF_BINARY_DIR})
+endif(${PROJ_BINARY_DIR})
 
 get_filename_component(CUR_ABSOLUTE_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 configure_files("${CUR_ABSOLUTE_DIR}" "${PROJ_BINARY_DIR}/qa")
