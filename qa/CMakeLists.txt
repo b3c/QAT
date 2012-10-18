@@ -45,6 +45,13 @@ endmacro(configure_files)
 SET(PROJ_SOURCE_DIR "${MAF_SOURCE_DIR}")
 SET(PROJ_BINARY_DIR "${MAF_BINARY_DIR}")
 
+message(FATAL_ERROR "*************   ${CMAKE_CURRENT_LIST_FILE} )
+
 get_filename_component(CUR_ABSOLUTE_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 configure_files("${CUR_ABSOLUTE_DIR}" "${PROJ_BINARY_DIR}/qa")
+
+message(FATAL_ERROR "*************   ${MAF_SOURCE_DIR} 
+                                ---- ${MAF_BINARY_DIR}
+                                ---- ${CUR_ABSOLUTE_DIR}")
+
 add_subdirectory(doc_output)
