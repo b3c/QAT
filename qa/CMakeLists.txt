@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+
 macro(configure_files srcDir destDir)
     message(STATUS "Configuring directory ${destDir}")
     make_directory(${destDir})
