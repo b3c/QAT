@@ -61,7 +61,7 @@ def run(param):
 
     if(param['LCOVCoverage']):
         baseDir = modulesDir
-        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "coverageScript.py")
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "lcov", "coverageScript.py")
 
         for item in os.listdir(baseDir):
             if (os.path.isfile(os.path.join(baseDir, item))==False):
@@ -69,12 +69,12 @@ def run(param):
                     os.system("python " + externalScriptFile + " " + item)
     if(param['cppcheck']):
         baseDir = modulesDir
-        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "cppcheckScript.py")
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "cppcheck", "cppcheckScript.py")
         print baseDir
         os.system("python " + externalScriptFile)
     if(param['cccc']):
         baseDir = modulesDir
-        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "ccccScript.py")
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "cccc", "ccccScript.py")
         for item in os.listdir(baseDir):
             if (os.path.isfile(os.path.join(baseDir, item))==False):
                 if(item.find("maf") != -1):

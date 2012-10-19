@@ -100,7 +100,7 @@ def run(param):
    pos = headString.find("@@@_EXTERNAL_TOOLS_REPORT_@@@")-1
    if(param['coverage']):
       #generateExternalLink
-      externalScriptDirectory = os.path.join(scriptsDir, "ExternalScripts")
+      externalScriptDirectory = os.path.join(scriptsDir, "ExternalScripts", "lcov")
       #os.chdir(externalScriptDirectory)
       os.system("python " + os.path.join(externalScriptDirectory, "coveragePublish.py"))
       
@@ -111,7 +111,7 @@ def run(param):
 
    if(param['cppcheck']):
       #generateExternalLink
-      externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts")
+      externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts", "cppcheck")
       #os.chdir(externalScriptDirectory)
       os.system("python " + os.path.join(externalScriptDirectory,"cppcheckPublish.py"))
       li = "<li><a href=\"../externalcppcheck/index.html\">Static Analysis</a></li>"
@@ -121,7 +121,7 @@ def run(param):
    
    if(param['cccc']):
       #generateExternalLink
-      externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts")
+      externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts", "cccc")
       #os.chdir(externalScriptDirectory)
       os.system("python " + os.path.join(externalScriptDirectory, "ccccPublish.py"))
       li = "<li><a href=\"../externalcccc/index.html\">Code Complexity</a></li>"
@@ -129,12 +129,6 @@ def run(param):
       pos = pos + len(li)
       #os.chdir(scriptsDir)
     
-   if(param['memory-profiling']):
-        externalScriptDirectory = os.path.join(scriptsDir,"ExternalScripts")
-        os.system("python " + os.path.join(externalScriptDirectory,"memoryProfilingPublish.py"))
-
-        pass
-
    #remove placeholder for external scripting
    headString = headString.replace("@@@_EXTERNAL_TOOLS_REPORT_@@@", "")
 
