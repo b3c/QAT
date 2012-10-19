@@ -61,7 +61,7 @@ def run(param):
 
     if(param['LCOVCoverage']):
         baseDir = modulesDir
-        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "LCOVCoverageScript.py")
+        externalScriptFile = os.path.join(currentPathScript, "ExternalScripts", "coverageScript.py")
 
         for item in os.listdir(baseDir):
             if (os.path.isfile(os.path.join(baseDir, item))==False):
