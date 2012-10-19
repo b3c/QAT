@@ -131,7 +131,7 @@ if __name__ == "__main__":
     disclaimer = """
     ************************************************************
     This script has been written for publishing inside mafQA site
-    the results of LCOV Coverage.
+    the results of cccc.
     It will process all the .html file in order to create coherent
     html pages.
     ************************************************************\n
