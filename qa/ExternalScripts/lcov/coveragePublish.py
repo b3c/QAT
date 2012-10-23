@@ -26,7 +26,7 @@ def publishReport():
     xmlList=os.listdir(xmlDir)
     htmlList=[file.replace(".xml", ".html") for file in os.listdir(xmlDir)]
     
-    externalCoverageDir = os.path.join(qaResultsDir,"externalCoverage")
+    externalCoverageDir = os.path.join(qaResultsDir,"externalLCOVCoverage")
     covList = os.listdir(externalCoverageDir)
     
     if(os.path.exists(htmlDir) == False):
