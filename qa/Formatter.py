@@ -104,7 +104,7 @@ def run(param):
       #os.chdir(externalScriptDirectory)
       os.system("python " + os.path.join(externalScriptDirectory, "coveragePublish.py"))
       
-      li = "<li><a href=\"../externalLCOVCoverage/index.html\">Coverage</a></li>";
+      li = "<li><a href=\"../externalCoverage/index.html\">Coverage</a></li>";
       headString = headString[:pos] + li + headString[pos:]
       pos = pos + len(li)
       #os.chdir(scriptsDir)
